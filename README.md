@@ -21,13 +21,13 @@ flowchart TD
         INV1["Photovoltaic Inverter 1 (Hybrid)"]
         INV2["Photovoltaic Inverter 2 (Off-Grid)"]
         BRIDGE["BL602 / ESP32 UART-TCP Bridge"]
-        INV1 -->|UART/Modbus| BRIDGE
-        INV2 -->|UART/Modbus| BRIDGE
+        INV1 -->|UART / Modbus| BRIDGE
+        INV2 -->|UART / Modbus| BRIDGE
     end
 
     subgraph Messaging_Transport ["Telemetry & Ingestion Layer"]
         MQTT["Mosquitto MQTT Message Broker"]
-        BRIDGE -->|Raw Telemetry Stream (JSON)| MQTT
+        BRIDGE -->|Raw Telemetry Stream - JSON| MQTT
     end
 
     subgraph Proxmox_LXC ["SolarHub Core (Proxmox LXC Container)"]
@@ -42,8 +42,8 @@ flowchart TD
     subgraph AI_Layer ["Agentic Orchestration (Model Context Protocol)"]
         MCPSRV["SolarHub Custom MCP Server"]
         LLM["AI Agent (Antigravity / LLM)"]
-        API <-->|RPC / State| MCPSRV
-        MCPSRV <-->|Tool Execution| LLM
+        API <--> MCPSRV
+        MCPSRV <--> LLM
     end
 ```
 
